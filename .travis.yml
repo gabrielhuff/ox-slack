@@ -1,0 +1,20 @@
+language: java
+install: true
+jdk:
+- oraclejdk8
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+script: "./gradlew test"
+deploy:
+  provider: script
+  script: "./gradlew deploy"
+  on:
+    branch: master
+env:
+  global:
+  - secure: LnyPQuiBZTP+vLtaKVqThIV9JgWRkSXY1u50LGTJewCwfzRI/18Mvl/DpBmSyU2wxqlga2G8XUMYFBmaGv8bC6x4NOp8Rq1cbgZHiDoIalXiCnmiTPrrWEpYo7ytePB6E2m8wDst/EAfloHYbpQV1I5EgXgfG3j/AvUAi+w21Zs87zTwVrJKcSJE5ZIHS5zj3bXVEvABnkBx8PxUwaDtCjltkIevOWAbtjp4pgx7m2X7q8FdYCks8KquLCq0fZvotkpSR6nHT8ztdk3OJklUHXun8hHWYXW2MBj6B1Equ3NX0wxlUL/VnCIJovaz3MVcIKwUg+9e/WG86OMJZHmPDYkDK3eispvIrFWc4PTFCndczsfQoehCAQCFk/Np+VW9HPJdt3Bypz1qXMkuOi1gG967MRTLz9o/s1qGxo5ANcZG2jBcnF7ugmlg+XrNPvypKgBZAL3rxC1sql1tBPa+3aDVVHbLb0lDQjmYG+KwxOoX8S9LrU0qxrt4ig48cDO04GgSlI5N3gE0W0jvzDJAlKZVCTnzyFDxA1ns5UpenDRi8RUVkVoWG1KPlqqQ2Nr8IWKA9Q6Z0/SZzg0WYa+5HE5EIo/egh0NrMnt3foxl0vbmijoI/5+oS4WGHxJ0ic+8Kf481joY6CoghiRRcCfYqp3v1erCP4zCgHyPe+3yMk=

@@ -1,0 +1,77 @@
+// Setup plugins
+
+plugins {
+    id 'application'                                  // For building an application
+    id 'org.jetbrains.kotlin.jvm' version '1.3.20'    // For using Kotlin
+    id "com.heroku.sdk.heroku-gradle" version "1.0.4" // For deploying to Heroku
+}
+
+// Setup project properties
+
+ext.baseName = "ox-meals"
+version = "0.1.1"
+
+// Setup the main class of our application (use engine provided by Ktor)
+
+mainClassName = "io.ktor.server.netty.EngineMain"
+
+// Setup source sets so that we can put everything on the project root for simplicity
+
+sourceSets {
+    main.kotlin {
+        srcDirs projectDir
+        setIncludes(['Main.kt'])
+    }
+    main.resources {
+        srcDirs projectDir
+        setIncludes(['application.conf'])
+    }
+    test.kotlin {
+        srcDirs projectDir
+        setIncludes(['Test.kt'])
+    }
+}
+
+// Setup app jar (create a 'fat jar' by including dependencies)
+
+jar {
+    manifest {
+        attributes "Main-Class": mainClassName
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+// Setup Heroku. The 'deployHeroku' task expects the 'HEROKU_API_KEY' environment variable to be set
+
+heroku {
+    appName = baseName
+    processTypes web: "java -jar ${jar.archiveName}".toString()
+    includes = [ jar.archivePath.toString() ]
+    includeRootDir = jar.archivePath.parentFile
+    includeBuildDir = false
+}
+
+deployHeroku {
+    dependsOn jar, test
+}
+
+// Setup dependencies
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"         // For kotlin utility
+    compile "io.ktor:ktor-server-netty:1.1.2"                 // For running the server engine
+    compile "io.ktor:ktor-client-apache:1.1.2"                // For making HTTP requests
+    compile "ch.qos.logback:logback-classic:1.2.3"            // For logging
+    compile "com.rubiconproject.oss:jchronic:0.2.8"           // For parsing date strings
+    compile "org.apache.pdfbox:pdfbox:2.0.13"                 // For extracting text from PDF files
+    
+    testCompile "io.ktor:ktor-server-tests:1.1.2"             // For testing the service
+    testCompile "io.ktor:ktor-client-mock-jvm:1.1.2"          // For testing clients
+    testCompile "com.github.tomakehurst:wiremock-jre8:2.21.0" // For mocking external services
+}
