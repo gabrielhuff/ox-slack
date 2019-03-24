@@ -1,0 +1,25 @@
+{
+  "name": "ox-slack",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "mocha",
+    "deploy": "serverless deploy"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.6",
+    "serverless": "^1.38.0",
+    "sinon": "^7.3.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chrono-node": "^1.3.11",
+    "crawler-request": "^1.2.2",
+    "memoizee": "^0.4.14",
+    "pdf-parse": "^1.1.1",
+    "weeknumber": "^1.1.1"
+  }
+}

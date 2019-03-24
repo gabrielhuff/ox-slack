@@ -1,0 +1,17 @@
+service: ox-meals
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  ox:
+    handler: handler.endpoint
+    events:
+      - http:
+          path: command
+          method: post
+    environment:
+      SLACK_TOKEN: ${env:SLACK_TOKEN}
