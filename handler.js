@@ -13,7 +13,8 @@ const getMenuByDate = async function(dayOfMonth, weekOfYear, year) {
     const possibleUrls = [
         `http://www.ox-linz.at/fileadmin/Mittagsmenue/${year}/OX_Linz_A5_Wochenmenue__KW${weekOfYear}.pdf`,
         `http://www.ox-linz.at/fileadmin/Mittagsmenue/OX_Linz_A5_Wochenmenue__KW${weekOfYear}.pdf`,
-        `http://www.ox-linz.at/fileadmin/Mittagsmenue/${year}/OX_Linz_A5_Wochenmenue__KW${weekOfYear}_V2.pdf`
+        `http://www.ox-linz.at/fileadmin/Mittagsmenue/${year}/OX_Linz_A5_Wochenmenue__KW${weekOfYear}_V2.pdf`,
+        `http://www.ox-linz.at/fileadmin/Mittagsmenue/${year}/OX_Linz_A5_Wochenmenue_KW${weekOfYear}.pdf`
     ]
     let menuText = ""
     for (url of possibleUrls) {
